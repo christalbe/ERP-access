@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Audit ERP</title>
+<meta name="theme-color" content="#14213d"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Audit ERP">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f5;--cd:#fff;--tx:#14213d;--mu:#5b6578;--bd:#d5dbe5;--ac:#1d4ed8;--on:#fff;--tint:#e3ebfd;--ok:#047857;--ko:#c81e1e;--wa:#b45309}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1424;--cd:#16203a;--tx:#e9eef8;--mu:#9aa6bf;--bd:#29365a;--ac:#7aa2ff;--on:#0d1424;--tint:#1d2b52;--ok:#34d399;--ko:#f87171;--wa:#fbbf24}}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.45 'Atkinson Hyperlegible',system-ui,sans-serif;background:var(--bg);color:var(--tx);padding:0 0 calc(84px + env(safe-area-inset-bottom))}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:var(--tx);color:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:12px}
+.top button.t{flex:1;text-align:left;color:inherit;min-width:0}
+.top b{display:block;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top small{opacity:.75;font-size:13px}
+.ring{position:relative;width:52px;height:52px;flex:none}
+.ring svg{transform:rotate(-90deg)}.ring circle{fill:none;stroke-width:4}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:13px}
+.wrap{max-width:720px;margin:0 auto;padding:14px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:44px;padding:0 14px;border-radius:12px;border:1.5px solid var(--bd);background:var(--cd);font-weight:700}
+.chip small{color:var(--mu);margin-left:4px}.chip.on{background:var(--ac);color:var(--on);border-color:var(--ac)}.chip.on small{color:var(--on);opacity:.8}
+.chip.add{border-style:dashed;color:var(--ac)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{min-height:52px;border-radius:12px;border:1.5px solid var(--bd);background:var(--cd);font-weight:700}
+.seg .c.on{background:var(--ok);border-color:var(--ok);color:#fff}.seg .k.on{background:var(--ko);border-color:var(--ko);color:#fff}
+.seg .s.on,.seg .p.on{background:var(--tx);border-color:var(--tx);color:var(--bg)}
+.prof{margin:4px 0 2px}.prof button{min-height:44px;font-size:14px}
+.mu{color:var(--mu)}.sm{font-size:14px}
+.bar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:12px 0}
+.f{display:flex;gap:6px}.f button{min-height:40px;padding:0 12px;border-radius:10px;font-weight:700;color:var(--mu)}.f .on{background:var(--tint);color:var(--ac)}
+.ghost{min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--bd);font-weight:700;background:var(--cd)}
+.pri{min-height:48px;padding:0 18px;border-radius:12px;background:var(--ac);color:var(--on);font-weight:700}
+h3{font-size:15px;margin:18px 2px 8px;color:var(--mu)}
+.it{background:var(--cd);border:1px solid var(--bd);border-left:6px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px}
+.it.C{border-left-color:var(--ok)}.it.NC{border-left-color:var(--ko)}.it.SO{border-left-color:var(--mu)}
+.it h4{font-size:17px;line-height:1.3}.it p{margin:2px 0 8px;font-size:14px}
+summary{min-height:36px;display:flex;align-items:center;color:var(--ac);font-weight:700;font-size:14px;cursor:pointer}
+.rule{background:var(--tint);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:10px}
+.it .seg{margin-top:10px}
+.note{width:100%;min-height:46px;margin-top:10px;padding:0 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg)}
+.ph{display:flex;align-items:center;gap:10px;margin-top:8px}.ph img{height:64px;border-radius:10px;border:1px solid var(--bd)}
+.ph label{min-height:44px;display:inline-flex;align-items:center;padding:0 12px;border-radius:10px;border:1.5px solid var(--bd);font-weight:700;font-size:14px;cursor:pointer}
+.warn{background:#fef3c7;color:#78350f;border-radius:12px;padding:12px;font-size:14px;margin-bottom:10px}
+.warn label{display:flex;gap:10px;align-items:center;margin-top:6px;font-weight:700}.warn input{width:22px;height:22px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px}
+.hero{background:var(--tx);color:var(--bg);border:0}.hero .big{font-size:56px;font-weight:700;line-height:1}
+.kp{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-weight:700}
+.hero .ok{color:#6ee7b7}.hero .ko{color:#fca5a5}
+.zr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--bd)}.zr:first-child{border:0}
+.zr .tr{flex:1;height:8px;background:var(--bd);border-radius:9px;overflow:hidden}.zr i{display:block;height:100%;background:var(--ok)}
+.fm{display:grid;gap:10px}.fm label{font-size:14px;color:var(--mu);display:grid;gap:4px}
+.fm input,.srch{min-height:46px;padding:0 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg);color:var(--tx);width:100%}
+.row{display:flex;gap:8px;align-items:center}.row>input{flex:1;min-height:44px;padding:0 12px;border-radius:12px;border:1.5px solid var(--bd);background:var(--cd)}
+.pe{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px;border-radius:14px;background:var(--cd);border:1.5px solid var(--bd);margin-bottom:8px}
+.pe.on{border-color:var(--ac)}.pe div{flex:1;min-width:0}.pe b{display:block}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);background:var(--cd);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+nav button{min-height:56px;border-radius:12px;font-weight:700;color:var(--mu);display:grid;place-items:center;font-size:13px}
+nav button.on{color:var(--ac);background:var(--tint)}nav span{font-size:20px;line-height:1}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+#toast.on{opacity:1}
+#pr{display:none}
+@media print{body>*:not(#pr){display:none!important}#pr{display:block;color:#000;background:#fff;font-size:11pt;padding:0}#pr table{width:100%;border-collapse:collapse}#pr td,#pr th{border-bottom:1px solid #ccc;padding:4px;text-align:left}#pr img{max-height:110px}#pr .nc{break-inside:avoid;border:1px solid #999;padding:8px;margin:6px 0;border-radius:6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header class="top">
+ <button class="t" onclick="go('parc')" aria-label="Changer d'établissement"><b id="nm"></b><small id="sb"></small></button>
+ <div class="ring"><svg viewBox="0 0 36 36" width="52" height="52"><circle cx="18" cy="18" r="15.9" stroke="rgba(255,255,255,.2)"/><circle id="rg" cx="18" cy="18" r="15.9" stroke="#6ee7b7" stroke-dasharray="0 100"/></svg><span id="rp">0%</span></div>
+</header>
+<main class="wrap" id="app"></main>
+<nav><button data-v="audit" onclick="go('audit')"><span>✔</span>Audit</button><button data-v="bilan" onclick="go('bilan')"><span>📋</span>Bilan</button><button data-v="parc" onclick="go('parc')"><span>🏛</span>Parc</button></nav>
+<div id="toast" role="status"></div><div id="pr"></div>
+<script>
+const R=a=>({id:a[0],cat:a[1],label:a[2],desc:a[3],rules:{neuf:a[4],existant14:a[5],existant5:a[6]}});
+const N={common:[
+["com_stationnement","Stationnement & abords","Stationnement réservé PMR","Au moins 2 % des places (min. 1), raccordé de plain-pied.","Largeur min. 3,30 m (dont bande latérale 0,80 m). Pente ≤ 2 %. Marquage au sol + panneau.","Largeur min. 3,30 m. Pente ≤ 2 %. Place la plus proche de l'accès principal.","1 place de 3,30 m si parking réservé à la clientèle. SANS OBJET si aucun parking dédié."],
+["com_cheminement","Stationnement & abords","Pente du cheminement extérieur","Pente et dévers entre la voirie ou le parking et l'entrée.","Pente ≤ 5 % (tolérance 8 % sur 2 m, 10 % sur 0,50 m, palier 1,40 × 1,20 m tous les 10 m). Dévers ≤ 2 %.","Pente max. 5 %. Jusqu'à 12 % sur 0,50 m si contrainte topographique avérée. Dévers ≤ 2 %.","Pente 5 % (12 % sur 0,50 m). Rampe amovible avec bouton d'appel possible avec accord/dérogation."],
+["com_entree_porte","Entrée & accueil","Largeur utile de la porte d'entrée","Largeur libre, porte ouverte à 90°.","Largeur utile min. 0,83 m (porte nominale 0,90 m).","Largeur utile min. 0,77 m admise (porte nominale 0,80 m).","0,77 m admis. Si vantaux asymétriques, le vantail principal doit atteindre 0,77 m."],
+["com_entree_seuil","Entrée & accueil","Seuil de porte & aire de rotation","Franchissement sans ressaut et manœuvre de la porte.","Seuil ≤ 2 cm chanfreiné. Aire de manœuvre Ø 1,50 m libre. Effort d'ouverture ≤ 50 N.","Seuil ≤ 2 cm (ou 4 cm chanfreiné à 33 %). Empiètement de la porte admis sur le cercle de rotation.","Seuil ≤ 2 cm, ou plan incliné d'appoint avec carillon d'appel si marche conservée."],
+["com_accueil_banque","Entrée & accueil","Banque d'accueil & boucle auditive","Comptoir adapté et équipement pour malentendants.","Hauteur max. 0,80 m (vide dessous : h ≥ 0,70, l ≥ 0,60, p ≥ 0,30 m). Boucle BIM fixe obligatoire.","Banque surbaissée ou tablette rabattable (0,80 m). Boucle BIM fixe requise.","Partie surbaissée ou tablette amovible. BIM mobile tolérée (obligatoire si service public)."],
+["com_rpa","Registre public d'accessibilité","Registre (RPA) à disposition","Obligatoire pour tous les ERP (décret 2017-431).","Consultable sur place : attestation d'achèvement, fiche de formation du personnel d'accueil.","Attestation de conformité ou agenda Ad'AP approuvé, arrêtés de dérogation éventuels.","Obligatoire même en 5ᵉ catégorie. Format allégé : notice d'accessibilité et attestation de sensibilisation."],
+["com_largeur_chem","Stationnement & abords","Largeur du cheminement extérieur","Largeur libre de tout obstacle (mobilier, poteaux, végétation).","Largeur min. 1,40 m libre (1,20 m en rétrécissement ponctuel). Hauteur libre ≥ 2,20 m.","Largeur min. 1,20 m (0,90 m ponctuel sur ≤ 0,50 m si contrainte). Hauteur libre ≥ 2,20 m.","Mêmes exigences que l'existant cat. 1 à 4."],
+["com_ressauts","Stationnement & abords","Ressauts, fentes et obstacles","Absence de rupture dans le cheminement.","Ressaut ≤ 2 cm (4 cm chanfreiné à 33 %). Ouvertures de grilles ≤ 2 cm. Obstacle en saillie ≤ 15 cm ou détectable à la canne.","Ressaut ≤ 2 cm, ou ≤ 4 cm chanfreiné à 33 %. Ouvertures ≤ 2 cm.","Mêmes seuils que l'existant cat. 1 à 4."],
+["com_rampe","Stationnement & abords","Rampe d'accès (si dénivelé)","Largeur, paliers et sécurité de la rampe.","Largeur ≥ 1,20 m. Palier 1,20 × 1,40 m en haut et en bas. Main courante continue des deux côtés. Chasse-roue en bord libre.","Largeur ≥ 1,20 m. Paliers haut et bas. Main courante. Rampe amovible tolérée si impossibilité technique.","Rampe amovible tolérée avec bouton d'appel. SANS OBJET si accès de plain-pied."],
+["com_eclairage_ext","Entrée & accueil","Éclairage extérieur","Éclairage du cheminement, du parking et de l'entrée.","20 lux min. en tout point du cheminement et du parking. Uniforme, sans éblouissement.","20 lux min. en tout point du cheminement. Détecteur de présence admis si temporisation suffisante.","Mêmes exigences. Détecteur de présence admis."],
+["com_commande_ext","Entrée & accueil","Interphone, bouton d'appel et commandes","Dispositifs de commande à l'entrée.","Commande entre 0,90 et 1,30 m, espace d'usage 0,80 × 1,30 m hors débattement, à ≥ 0,40 m d'un angle rentrant. Retour visuel et sonore.","Commande entre 0,90 et 1,30 m. Espace d'usage 0,80 × 1,30 m. Utilisable d'une seule main.","Bouton d'appel entre 0,90 et 1,30 m, signalé, si rampe amovible ou marche conservée."],
+["com_porte_auto","Entrée & accueil","Portes automatiques, tambours et tourniquets","Passage sécurisé, doublé si nécessaire.","Porte automatique : détection du public, durée d'ouverture suffisante, sécurité anti-pincement. Tambour/tourniquet doublé d'un accès adapté.","Mêmes exigences. Tourniquet et tambour doublés d'une porte adaptée à proximité.","Mêmes exigences. SANS OBJET si porte manuelle simple."],
+["com_signal_entree","Entrée & accueil","Signalisation de l'entrée et information","Repérage de l'entrée principale et des accès adaptés.","Entrée repérable (contraste, éclairage). Pictogramme d'accessibilité sur les accès adaptés. Caractères lisibles, contrastés, non éblouissants.","Entrée principale repérable. Accès adapté signalé s'il est distinct de l'entrée principale.","Mêmes exigences, allégées pour les petits établissements."],
+["com_guidage","Entrée & accueil","Guidage jusqu'à l'accueil","Repérage visuel ou tactile jusqu'à l'accueil.","Cheminement repérable (contraste ou ligne guide) si l'accueil n'est pas visible depuis l'entrée. Revêtement non glissant.","Même exigence si l'accueil n'est pas visible depuis l'entrée.","Accueil visible depuis l'entrée recommandé ; sinon guidage."]].map(R),
+floor:[
+["fl_desserte","Accès à ce niveau","Ascenseur ou appareil élévateur","Continuité mécanique vers ce niveau.","Ascenseur obligatoire dès 50 pers. en étage ou prestations non équivalentes au RDC. Norme EN 81-70.","Ascenseur obligatoire sauf impossibilité technique ou disproportion manifeste validée par la CCDSA.","DISPENSE TOTALE si la prestation est disponible de plain-pied au rez-de-chaussée."],
+["fl_escalier_secu","Accès à ce niveau","Sécurité de l'escalier","Éveil de vigilance, contrastes, mains courantes.","BEV à 50 cm de la 1ʳᵉ marche descendante. Nez contrastés antidérapants. 1ʳᵉ et dernière contremarches contrastées (10 cm). Deux mains courantes.","BEV en haut de chaque volée. Nez et contremarches contrastés. Une main courante tolérée si largeur < 1,00 m.","BEV en haut. Nez contrastés antidérapants. Au moins une main courante rigide continue."],
+["fl_couloirs","Circulations","Largeur des couloirs & dégagements","Passage et croisement des fauteuils roulants.","Largeur utile min. 1,40 m continue.","Min. 1,20 m (0,90 à 1,00 m ponctuel avec zones de croisement tous les 10 m).","Min. 1,20 m (0,90 m ponctuel sur circulations secondaires)."],
+["fl_portes","Circulations","Portes intérieures & poignées","Passage utile et manœuvrabilité.","Largeur utile min. 0,83 m. Poignées entre 0,90 et 1,30 m. Effort ≤ 50 N.","Largeur utile min. 0,77 m. Poignées préhensibles debout ou assis.","0,77 m admis sur les portes d'accès aux prestations publiques."],
+["fl_vitrage","Circulations","Repérage des parois vitrées","Bandes contrastées anti-heurt à hauteur des yeux.","Bandes contrastées à 1,10 m et 1,60 m sur chaque baie.","Bandes à 1,10 m et 1,60 m (largeur min. 5 cm).","Repérage contrasté indispensable sur toute paroi vitrée transparente."],
+["fl_wc_pmr","Sanitaires","Cabinet d'aisances adapté","Espace de manœuvre, aire de transfert, équipements.","1 WC adapté min. Espace Ø 1,50 m hors débattement. Espace latéral 0,80 × 1,30 m. Barre à 0,70-0,80 m.","Espace Ø 1,50 m et latéral 0,80 × 1,30 m. Débattement admis sur l'espace si porte ouvrant vers l'extérieur ou coulissante.","SANS OBJET si sanitaires réservés au personnel."],
+["fl_alarme_flash","Sécurité & évacuation","Alarme visuelle & espaces d'attente (EAS)","Signal lumineux et zone refuge temporaire.","Flashs dans sanitaires et locaux isolés. EAS à chaque étage accessible.","Flash dans sanitaires PMR. EAS ou évacuation différée validée avec les pompiers.","Flash si sanitaires isolés et SSI présent. EAS seulement si public hébergé en étage sans sortie directe."],
+["fl_escalier_dim","Accès à ce niveau","Dimensions de l'escalier","Largeur, hauteur de marche et giron.","Largeur ≥ 1,20 m entre mains courantes. Marche ≤ 16 cm, giron ≥ 28 cm. Palier de repos en haut de volée. Main courante prolongée d'un giron.","Largeur ≥ 1,20 m en principe (1,00 m selon contrainte). Marche ≤ 17 cm, giron ≥ 28 cm. Main courante prolongée.","Marche ≤ 17 cm, giron ≥ 28 cm. Au moins une main courante prolongée en haut et en bas."],
+["fl_asc_dim","Accès à ce niveau","Caractéristiques de l'ascenseur","Cabine, porte, commandes et annonces.","NF EN 81-70. Cabine ≥ 1,00 × 1,30 m. Porte ≥ 0,80 m. Commandes 0,90-1,30 m. Annonce sonore et affichage visuel.","NF EN 81-70 ou conformité à l'arrêté d'époque. Cabine ≥ 1,00 × 1,30 m. Annonce vocale et affichage visuel.","SANS OBJET si dispense d'ascenseur. Sinon cabine ≥ 1,00 × 1,30 m."],
+["fl_eclairage","Circulations","Éclairage intérieur","Niveaux d'éclairement des circulations et escaliers.","100 lux min. en circulations, 150 lux dans escaliers et équipements mobiles, 200 lux aux postes d'accueil. Sans éblouissement.","100 lux en circulations, 150 lux dans les escaliers. Même exigence aux postes d'accueil.","Mêmes seuils dans les circulations utilisées par le public."],
+["fl_sols","Circulations","Revêtements de sol et tapis","Sols non glissants, sans obstacle à la roue.","Non glissants, non réfléchissants, sans ressaut > 2 cm. Tapis et moquette fixés, sans ressaut.","Mêmes exigences. Tapis encastré ou fixé, ressaut ≤ 2 cm.","Mêmes exigences."],
+["fl_commandes","Circulations","Interrupteurs, prises et commandes","Atteignabilité des équipements d'usage.","Commandes entre 0,90 et 1,30 m, espace d'usage 0,80 × 1,30 m, utilisables d'une main sans serrage.","Même exigence : 0,90 à 1,30 m.","Même exigence pour les commandes destinées au public."],
+["fl_lavabo","Sanitaires","Lavabo accessible","Hauteur, vide sous lavabo, robinetterie.","Hauteur ≤ 0,85 m. Vide dessous h ≥ 0,70 m, prof. ≥ 0,30 m. Robinet à manœuvre simple. Miroir lisible assis.","Même exigence, dans le sanitaire adapté ou à proximité.","SANS OBJET si sanitaires réservés au personnel."],
+["fl_wc_porte","Sanitaires","Porte, verrou et signalisation du WC adapté","Utilisation en autonomie et sécurité.","Porte ≥ 0,90 m, barre de tirage intérieure, verrou utilisable d'une main, ouverture extérieure possible en cas de malaise. Pictogramme normalisé.","Même exigence. Passage utile ≥ 0,77 m admis.","SANS OBJET si sanitaires réservés au personnel."],
+["fl_wc_cuvette","Sanitaires","Cuvette, abattant et barre d'appui","Hauteur d'assise et équipement de transfert.","Assise 0,45-0,50 m abattant inclus. Barre horizontale à 0,70-0,80 m côté transfert. Commande de chasse accessible.","Même exigence. Barre d'appui sur le côté du transfert.","SANS OBJET si sanitaires réservés au personnel."],
+["fl_salle","Locaux spécifiques","Salles et emplacements pour fauteuils","Espaces réservés dans les salles à public assis.","2 emplacements jusqu'à 50 places, puis 1 par tranche de 50 places supplémentaire. Aire 0,80 × 1,30 m, répartie, avec place d'accompagnant.","Mêmes exigences, emplacements répartis en zones de bonne visibilité.","SANS OBJET si pas de salle à public assis."],
+["fl_caisse","Locaux spécifiques","Caisses, comptoirs et banques de service","Hauteur et passage devant les postes.","Partie accessible h ≤ 0,80 m, passage ≥ 0,90 m devant la caisse, vide dessous h ≥ 0,70 m.","Partie accessible ou tablette rabattable ≤ 0,80 m. Passage ≥ 0,90 m.","Partie surbaissée ou tablette amovible. SANS OBJET si aucune caisse."],
+["fl_douches","Locaux spécifiques","Douches, vestiaires et cabines d'essayage","Au moins une cabine ou douche aménagée si prévues.","1 cabine ou douche adaptée min. : espace Ø 1,50 m hors débattement, siège, barre d'appui, sol sans ressaut.","Même exigence : au moins 1 cabine ou douche adaptée.","SANS OBJET si aucun local de ce type."],
+["fl_signal_int","Sécurité & évacuation","Signalisation et information intérieures","Repérage des circulations, sanitaires et services.","Pictogrammes contrastés, caractères lisibles, informations visuelles doublées de sonores, sans éblouissement.","Mêmes exigences pour les informations essentielles.","Signalisation des sanitaires, escaliers et sorties."],
+["fl_issues","Sécurité & évacuation","Sorties et dispositifs d'ouverture des issues","Autonomie lors de l'évacuation.","Dispositifs d'ouverture entre 0,90 et 1,30 m, effort ≤ 50 N, largeur utile ≥ 0,83 m, sorties repérées visuellement et sonorement.","Mêmes exigences : issue manœuvrable en fauteuil, repérage.","Mêmes exigences pour les issues utilisées par le public."]].map(R)};
+const PR={neuf:['Neuf','ERP neuf · arrêté du 20/04/2017'],existant14:['Existant 1-4','Existant cat. 1 à 4 · arrêté du 08/12/2014'],existant5:['5ᵉ cat.','Existant 5ᵉ catégorie · allègements']};
+const ST={C:'Conforme',NC:'Non conforme',SO:'Sans objet'};
+const K='erp_municipal_park_v1',$=s=>document.querySelector(s),today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const nf=n=>({id:'fl_'+uid(),name:n,isGroundFloor:false,prestationAtRdc:true,items:{}});
+const mk=(n,a,c,p,fl)=>({id:'erp_'+uid(),name:n,address:a,category:c,constructionYear:'',profile:p,auditor:'',date:today(),activeTab:'common',commonScope:{items:{}},floors:fl||[nf('RDC')]});
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!S||!S.erps||!S.erps.length){const e=mk('Mon premier ERP','','5','existant5');S={activeERPId:e.id,erps:[e]}}
+let view='audit',flt='all',armed='',q='';
+const E=()=>S.erps.find(e=>e.id===S.activeERPId)||S.erps[0];
+const zones=e=>[{id:'common',name:'Tronc commun',sc:e.commonScope,list:N.common},...e.floors.map(f=>({id:f.id,name:f.name,sc:f,list:N.floor}))];
+const Z=e=>zones(e).find(z=>z.id===e.activeTab)||zones(e)[0];
+const cnt=z=>{let c=0,nc=0,so=0;z.list.forEach(k=>{const s=(z.sc.items[k.id]||{}).status;if(s=='C')c++;else if(s=='NC')nc++;else if(s=='SO')so++});return{c,nc,so,n:z.list.length,d:c+nc+so,p:c+nc?Math.round(c/(c+nc)*100):0}};
+const tot=e=>{const t={c:0,nc:0,so:0,n:0,d:0};zones(e).forEach(z=>{const r=cnt(z);for(const k in t)t[k]+=r[k]});t.p=t.c+t.nc?Math.round(t.c/(t.c+t.nc)*100):0;return t};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){toast('Mémoire pleine : exportez l\'audit')}};
+let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)};
+const item=(z,id)=>z.sc.items[id]||(z.sc.items[id]={});
+function go(v){view=v;armed='';scrollTo(0,0);render()}
+function tab(id){E().activeTab=id;armed='';save();render()}
+function prof(p){E().profile=p;save();render()}
+function setS(id,s){const o=item(Z(E()),id);o.status=o.status===s?'pending':s;save();render()}
+function setN(id,v){item(Z(E()),id).note=v;save()}
+function addF(){const e=E(),f=nf('R+'+e.floors.length);e.floors.push(f);e.activeTab=f.id;save();render()}
+function ren(v){Z(E()).sc.name=v;save()}
+function delF(){const e=E();if(e.floors.length<2)return toast('Un niveau minimum');if(armed!=='f'){armed='f';return render()}e.floors=e.floors.filter(f=>f.id!==e.activeTab);e.activeTab='common';armed='';save();render()}
+function rdc(v){const f=Z(E()).sc;f.prestationAtRdc=v;if(v&&E().profile==='existant5'){const o=(f.items.fl_desserte=f.items.fl_desserte||{});o.status='SO';o.note="Dispense d'ascenseur : prestations au rez-de-chaussée."}save();render()}
+function allOk(){const z=Z(E());z.list.forEach(k=>item(z,k.id).status='C');save();render();toast('Écran validé')}
+function filt(f){flt=f;render()}
+function photo(ev,id){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{const im=new Image();im.onload=()=>{const w=Math.min(800,im.width),c=document.createElement('canvas');c.width=w;c.height=im.height*w/im.width;c.getContext('2d').drawImage(im,0,0,c.width,c.height);item(Z(E()),id).photo=c.toDataURL('image/jpeg',.65);save();render()};im.src=x.target.result};r.readAsDataURL(f)}
+function noPhoto(id){delete item(Z(E()),id).photo;save();render()}
+function meta(k,v){E()[k]=v;save();$('#nm').textContent=E().name||'Sans nom';$('#sb').textContent=PR[E().profile][0]+' · '+(E().address||'—')}
+function pick(id){S.activeERPId=id;view='audit';save();scrollTo(0,0);render()}
+function newE(){const e=mk('Nouvel ERP '+(S.erps.length+1),'','5','existant5');e.auditor=E().auditor;S.erps.push(e);pick(e.id);toast('Établissement créé : renseignez-le dans Bilan')}
+function delE(id){if(S.erps.length<2)return toast('Un établissement minimum');if(armed!==id){armed=id;return render()}S.erps=S.erps.filter(e=>e.id!==id);if(S.activeERPId===id)S.activeERPId=S.erps[0].id;armed='';save();render()}
+function dl(n,t,m){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),999)}
+function expJSON(){const e=E();dl('Audit_'+e.name.replace(/\W+/g,'_')+'_'+today()+'.json',JSON.stringify(e,null,2),'application/json')}
+function expCSV(){let c='ID;Nom;Adresse;Categorie;Annee;Profil;Score;Conformes;Non_conformes;Sans_objet\n';S.erps.forEach(e=>{const t=tot(e);c+=[e.id,e.name,e.address,e.category,e.constructionYear,e.profile].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(';')+`;"${t.p}%";${t.c};${t.nc};${t.so}\n`});dl('bilan_parc_erp_'+today()+'.csv',c,'text/csv;charset=utf-8')}
+function tpl(){dl('modele_parc_erp.csv','nom;adresse;categorie;annee_construction;niveaux\nÉcole Jean Moulin;14 Rue des Écoles;5;1982;RDC,R+1\nMairie annexe;Place de la Mairie;4;1920;RDC,R+1,R+2\n','text/csv;charset=utf-8')}
+function imp(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{const L=x.target.result.split(/\r?\n/).filter(l=>l.trim());if(L.length<2)return toast('Fichier CSV vide');const sp=L[0].includes(';')?';':',';let n=0;L.slice(1).forEach(l=>{const c=l.split(sp).map(s=>s.trim().replace(/^"|"$/g,''));if(!c[0])return;const cat=c[2]||'5',an=c[3]||'';const p=+an>=2017?'neuf':(+cat>=1&&+cat<=4?'existant14':'existant5');const fl=(c[4]||'RDC').split(/[,/]/).map(s=>s.trim()).filter(Boolean).map(s=>nf(s));const e=mk(c[0],c[1]||'',cat,p,fl);e.constructionYear=an;S.erps.push(e);n++});save();render();toast(n+' établissement(s) importé(s)')};r.readAsText(f,'UTF-8');ev.target.value=''}
+
+function itemH(k,z,e){const o=z.sc.items[k.id]||{},s=o.status||'pending';
+return `<div class="it ${s}"><h4>${k.label}</h4><p class="mu">${k.desc}</p>
+<details ${s==='NC'?'open':''}><summary>Exigence · ${PR[e.profile][0]}</summary><div class="rule">${k.rules[e.profile]}</div></details>
+<div class="seg" role="group" aria-label="Statut"><button class="c ${s==='C'?'on':''}" onclick="setS('${k.id}','C')">✓ Conforme</button><button class="k ${s==='NC'?'on':''}" onclick="setS('${k.id}','NC')">✗ Non conf.</button><button class="s ${s==='SO'?'on':''}" onclick="setS('${k.id}','SO')">S.O.</button></div>
+<input class="note" value="${esc(o.note)}" oninput="setN('${k.id}',this.value)" placeholder="Cotes mesurées, observations…" aria-label="Observations">
+<div class="ph"><label>📷 ${o.photo?'Refaire la photo':'Photo'}<input type="file" accept="image/*" capture="environment" hidden onchange="photo(event,'${k.id}')"></label>${o.photo?`<img src="${o.photo}" alt="Photo"><button class="ghost" onclick="noPhoto('${k.id}')" aria-label="Retirer la photo">✕</button>`:''}</div></div>`}
+
+function audit(){const e=E(),z=Z(e),c=z.id==='common',t=cnt(z);
+let h=`<div class="chips">${zones(e).map(x=>`<button class="chip ${x.id===z.id?'on':''}" onclick="tab('${x.id}')">${x.name}<small>${cnt(x).d}/${x.list.length}</small></button>`).join('')}<button class="chip add" onclick="addF()">＋ Niveau</button></div>
+<div class="seg prof">${Object.keys(PR).map(k=>`<button class="p ${e.profile===k?'on':''}" onclick="prof('${k}')">${PR[k][0]}</button>`).join('')}</div><p class="mu sm" style="margin:6px 2px 0">${PR[e.profile][1]}</p>`;
+if(!c)h+=`<div class="row" style="margin-top:12px"><input value="${esc(z.name)}" oninput="ren(this.value)" aria-label="Nom du niveau"><button class="ghost" onclick="delF()">${armed==='f'?'Confirmer ?':'🗑 Supprimer'}</button></div>`;
+if(!c&&e.profile==='existant5')h+=`<div class="warn" style="margin-top:12px"><b>5ᵉ catégorie</b> — les prestations de ce niveau sont-elles aussi délivrées au rez-de-chaussée ?<label><input type="checkbox" ${z.sc.prestationAtRdc?'checked':''} onchange="rdc(this.checked)">Oui, dispense d'ascenseur</label></div>`;
+h+=`<div class="bar"><div class="f">${[['all','Tous'],['NC','Non conf.'],['pending','À faire']].map(a=>`<button class="${flt===a[0]?'on':''}" onclick="filt('${a[0]}')">${a[1]}</button>`).join('')}</div><button class="ghost" onclick="allOk()">✓ Tout valider</button></div>`;
+const g={};z.list.forEach(k=>{const s=(z.sc.items[k.id]||{}).status||'pending';if(flt==='all'||s===flt)(g[k.cat]=g[k.cat]||[]).push(k)});
+const ks=Object.keys(g);
+if(!ks.length)h+=`<div class="card mu" style="text-align:center">${flt==='NC'?'Aucune non-conformité sur cet écran.':'Tous les points sont contrôlés. Passez au niveau suivant ou ouvrez le Bilan.'}</div>`;
+ks.forEach(k=>{h+=`<h3>${k}</h3>`+g[k].map(x=>itemH(x,z,e)).join('')});return h}
+
+function bilan(){const e=E(),T=tot(e);
+let h=`<div class="card hero"><div class="big">${T.p}%</div><div>de conformité sur les points évalués</div><div class="kp"><span class="ok">${T.c} conformes</span><span class="ko">${T.nc} non conformes</span><span>${T.so} sans objet</span><span>${T.n-T.d} à contrôler</span></div></div><div class="card">`;
+zones(e).forEach(z=>{const r=cnt(z);h+=`<div class="zr"><b style="width:38%">${esc(z.name)}</b><div class="tr"><i style="width:${r.p}%"></i></div><span>${r.p}%</span></div>`});h+='</div>';
+const ncs=[];zones(e).forEach(z=>z.list.forEach(k=>{const o=z.sc.items[k.id];if(o&&o.status==='NC')ncs.push([z,k,o])}));
+h+=`<h3>Points à corriger (${ncs.length})</h3>`+(ncs.length?ncs.map(([z,k,o])=>`<div class="it NC"><h4>${k.label}</h4><p class="mu">${esc(z.name)}</p><div class="rule">${k.rules[e.profile]}</div>${o.note?`<p><b>Constat :</b> ${esc(o.note)}</p>`:''}${o.photo?`<img src="${o.photo}" alt="" style="height:80px;border-radius:10px">`:''}</div>`).join(''):'<div class="card mu">Aucune non-conformité relevée.</div>');
+h+=`<h3>Fiche de l'établissement</h3><div class="card fm"><label>Nom<input value="${esc(e.name)}" oninput="meta('name',this.value)"></label><label>Adresse<input value="${esc(e.address)}" oninput="meta('address',this.value)"></label><label>Auditeur<input value="${esc(e.auditor)}" oninput="meta('auditor',this.value)"></label><label>Date de visite<input type="date" value="${e.date||''}" onchange="meta('date',this.value)"></label></div>
+<div class="bar"><button class="pri" style="flex:1" onclick="printPDF()">Imprimer / PDF</button><button class="ghost" style="min-height:48px" onclick="expJSON()">Sauvegarder</button></div>`;return h}
+
+function parc(){return `<div class="bar"><input class="srch" placeholder="Rechercher un établissement…" value="${esc(q)}" oninput="q=this.value;$('#pl').innerHTML=pl()" aria-label="Rechercher"><button class="pri" onclick="newE()">＋</button></div><div id="pl">${pl()}</div>
+<div class="bar" style="flex-wrap:wrap"><label class="ghost" style="display:inline-flex;align-items:center;cursor:pointer">Importer CSV<input type="file" accept=".csv,.txt" hidden onchange="imp(event)"></label><button class="ghost" onclick="expCSV()">Exporter le bilan</button><button class="ghost" onclick="tpl()">Modèle CSV</button></div>`}
+function pl(){const s=q.toLowerCase(),l=S.erps.filter(e=>(e.name+' '+e.address+' cat '+e.category).toLowerCase().includes(s));
+return l.map(e=>{const t=tot(e);return `<div class="pe ${e.id===S.activeERPId?'on':''}"><div onclick="pick('${e.id}')" style="cursor:pointer"><b>${esc(e.name)}</b><span class="mu sm">Cat. ${e.category||'?'} · ${e.floors.length} niveau(x) · ${esc(e.address)||'sans adresse'}</span></div><b>${t.p}%</b><button class="ghost" onclick="delE('${e.id}')" aria-label="Supprimer">${armed===e.id?'Confirmer ?':'🗑'}</button></div>`}).join('')||'<div class="card mu">Aucun résultat.</div>'}
+
+function printPDF(){const e=E(),T=tot(e);let h=`<h1>Rapport d'accessibilité ERP</h1><p>${esc(e.name)} — ${esc(e.address)}<br>Auditeur : ${esc(e.auditor)||'—'} · ${PR[e.profile][1]}<br>Visite du ${e.date||'—'} · édité le ${new Date().toLocaleDateString('fr-FR')}</p><h2>Synthèse : ${T.p}%</h2><table><tr><th>Zone</th><th>C</th><th>NC</th><th>S.O.</th><th>Score</th></tr>`;
+zones(e).forEach(z=>{const r=cnt(z);h+=`<tr><td>${esc(z.name)}</td><td>${r.c}</td><td>${r.nc}</td><td>${r.so}</td><td>${r.p}%</td></tr>`});h+='</table><h2>Non-conformités</h2>';
+zones(e).forEach(z=>z.list.forEach(k=>{const o=z.sc.items[k.id];if(o&&o.status==='NC')h+=`<div class="nc"><b>${esc(z.name)} — ${k.label}</b><br>Exigence : ${k.rules[e.profile]}${o.note?`<br>Constat : ${esc(o.note)}`:''}${o.photo?`<br><img src="${o.photo}">`:''}</div>`}));
+h+='<p style="margin-top:30px">Visa du diagnostiqueur :</p><div style="height:70px;width:240px;border:1px dashed #888"></div>';$('#pr').innerHTML=h;print()}
+
+function render(){const y=scrollY,e=E(),T=tot(e);
+$('#app').innerHTML=view=='audit'?audit():view=='bilan'?bilan():parc();
+$('#nm').textContent=e.name||'Sans nom';$('#sb').textContent=PR[e.profile][0]+' · '+(e.address||'—');
+$('#rg').style.strokeDasharray=T.p+' 100';$('#rp').textContent=T.p+'%';
+document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==view));scrollTo(0,y)}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+render();
+</script></body></html>
